@@ -2,15 +2,31 @@
 
 Autonomous, verified research operations with source-anchored, confidence-scored output.
 
-## Quick Start
+## Installation
+
+### Claude Code
+
+```
+/install-skill https://github.com/ckelsoe/research-assistant/tree/main/skills/research-assistant
+```
+
+### Codex CLI
+
+```
+$skill-installer install https://github.com/ckelsoe/research-assistant/tree/main/skills/research-assistant
+```
+
+### Other Agents (Gemini, Cursor, Copilot, Cline, Roo Code, etc.)
+
+Copy `skills/research-assistant/` from this repo to `~/.agents/skills/research-assistant/`
+
+### npm (alternative)
 
 ```bash
 npx @ckelsoe/research-assistant
 ```
 
-The interactive installer detects your AI agents and lets you choose where to install.
-
-> Requires `.npmrc` with `@ckelsoe:registry=https://npm.pkg.github.com` and a GitHub token with `read:packages` scope.
+Installs to both `.claude/skills/` and `.agents/skills/` in one step.
 
 ## What It Does
 
@@ -27,31 +43,27 @@ Research Assistant is a multi-agent research pipeline that structures, executes,
 
 ### Capabilities (18 Operations)
 
-**Core:** New Research (NR), Refresh Research (RF)
-**Create:** Create Schema (CS), Create Domain (CD), Import Assets (IM)
-**Analyze:** Challenge Research (CR), Compare Research (CM), Synthesize Research (SY), Whitepaper (WP)
-**Publish:** Publish (PB)
-**Manage:** Manage Schemas (MS), Manage Domains (MD), List Research (LR), Quick Capture (QC)
-**Pipeline:** Resume (RS), Delete/Archive (DL), Status (ST)
-**Config:** Tool Detect (TD), QI Rule (QR)
-
-## Installation
-
-### Via npm (recommended)
-
-```bash
-npx @ckelsoe/research-assistant
-```
-
-### Manual
-
-Copy the `skills/research-assistant/` directory to your AI agent's skill location:
-
-| Agent | Location |
-|-------|----------|
-| Claude Code | `~/.claude/skills/research-assistant/` |
-| Gemini CLI | `~/.gemini/skills/research-assistant/` |
-| Codex, Cursor, Copilot, etc. | `~/.agents/skills/research-assistant/` |
+| Code | Name | Description |
+|------|------|-------------|
+| **NR** | New Research | Full pipeline from intake to published deliverable |
+| **RF** | Refresh Research | Scan stale research for changes and refresh |
+| **PB** | Publish | Transform validated dossier into audience-appropriate deliverable |
+| **CS** | Create Schema | Design a new research schema via guided conversation |
+| **CD** | Create Domain | Define a new research domain via guided conversation |
+| **CR** | Challenge Research | Adversarial reasoning validation of a dossier |
+| **WP** | Whitepaper | Generate focused whitepaper from research subtopic |
+| **CM** | Compare Research | Side-by-side comparison of 2+ dossiers |
+| **SY** | Synthesize Research | Cross-cutting themes across multiple dossiers |
+| **MS** | Manage Schemas | Schema lifecycle: list, view, clone, validate, deprecate, export |
+| **MD** | Manage Domains | Domain lifecycle: list, view, clone, validate, deprecate, export |
+| **IM** | Import Assets | Import schemas/domains from external sources |
+| **LR** | List Research | Show all research artifacts with status and confidence |
+| **QC** | Quick Capture | Stub a research idea for later execution |
+| **RS** | Resume | Continue an interrupted or stalled pipeline |
+| **DL** | Delete/Archive | Remove or archive research artifacts |
+| **ST** | Status | Check progress on a specific pipeline run |
+| **TD** | Tool Detect | Force re-detection of available research tools |
+| **QR** | QI Rule | Capture a quality improvement rule |
 
 ## Dual-Mode: Standalone + BMad
 
