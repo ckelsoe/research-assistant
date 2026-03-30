@@ -16,7 +16,7 @@ compatibility: >-
   fetching. WebFetch baseline always available.
 metadata:
   author: ckelsoe
-  version: "2.0.1"
+  version: "2.0.2"
   homepage: https://github.com/ckelsoe/research-assistant
 ---
 

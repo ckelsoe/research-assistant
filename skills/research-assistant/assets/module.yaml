@@ -1,6 +1,6 @@
 code: research-assistant
 name: "Research Assistant"
-module_version: 2.0.1
+module_version: 2.0.2
 header: "Autonomous, verified research operations with source-anchored, confidence-scored output"
 subheader: "Multi-agent research with composable schemas, domains, and adversarial verification"
 default_selected: false
