@@ -1,6 +1,6 @@
 {
   "name": "@ckelsoe/research-assistant",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Autonomous multi-agent research operations with source-anchored, confidence-scored output. Works with Claude Code, Gemini CLI, Cursor, Copilot, and 30+ Agent Skills compatible tools.",
   "main": "skills/research-assistant/SKILL.md",
   "keywords": [
@@ -63,7 +63,7 @@
     "type": "skill",
     "skillName": "research-assistant",
     "skillPath": "skills/research-assistant",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "compatibility": {
       "claudeCode": ">=1.0.0"
     },
