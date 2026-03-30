@@ -239,9 +239,8 @@ async function installInteractive(sourcePath, isProject) {
     });
   }
 
-  const initialValues = detected
-    .filter(a => !a.alwaysShow)
-    .map(a => a.id);
+  // Pre-select all detected agents (including universal .agents/)
+  const initialValues = detected.map(a => a.id);
 
   const selected = await p.multiselect({
     message: 'Select agents to install for:',
@@ -326,8 +325,8 @@ async function main() {
 
   // Mode 3: --yes flag (accept defaults = all detected, non-interactive)
   if (flags.yes) {
-    const detected = AGENTS.filter(a => a.detect() && !a.alwaysShow).map(a => a.id);
-    installNonInteractive(detected.length > 0 ? detected : ['claude'], sourcePath, isProject);
+    const detected = AGENTS.filter(a => a.detect()).map(a => a.id);
+    installNonInteractive(detected, sourcePath, isProject);
     return;
   }
 
@@ -337,11 +336,10 @@ async function main() {
     return;
   }
 
-  // Mode 5: Non-interactive fallback (postinstall, CI)
+  // Mode 5: Non-interactive fallback (postinstall, CI) — install to ALL agents
   const log = console.error.bind(console);
   const version = getVersion();
-  const detected = AGENTS.filter(a => a.detect() && !a.alwaysShow);
-  const targets = detected.length > 0 ? detected : AGENTS.filter(a => a.id === 'claude');
+  const targets = AGENTS.filter(a => a.detect());
   const results = [];
 
   for (const agent of targets) {
