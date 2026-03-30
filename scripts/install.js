@@ -25,6 +25,8 @@ const SKILL_SOURCE_DIR = 'skills';
 
 // ─── Agent Registry ──────────────────────────────────────────────
 
+// Two targets only: .claude/ for Claude Code, .agents/ for everything else
+// (Gemini, Codex, Cursor, Copilot, Cline, Roo, etc. all scan .agents/skills/)
 const AGENTS = [
   {
     id: 'claude',
@@ -37,27 +39,13 @@ const AGENTS = [
     hint: (project) => project ? '.claude/skills/ (project)' : '~/.claude/skills/',
   },
   {
-    id: 'gemini',
-    name: 'Gemini CLI',
-    detect: () => {
-      if (fs.existsSync(path.join(os.homedir(), '.gemini'))) return true;
-      try {
-        execSync(process.platform === 'win32' ? 'where gemini' : 'which gemini', { stdio: 'ignore' });
-        return true;
-      } catch { return false; }
-    },
-    installPath: () => path.join(os.homedir(), '.gemini', 'skills', SKILL_NAME),
-    format: 'skill',
-    hint: () => '~/.gemini/skills/',
-  },
-  {
     id: 'agents',
     name: 'Agent Skills (universal)',
-    detect: () => true, // Always available
+    detect: () => true, // Always available — covers Gemini, Codex, Cursor, Copilot, 30+ others
     alwaysShow: true,
     installPath: () => path.join(os.homedir(), '.agents', 'skills', SKILL_NAME),
     format: 'skill',
-    hint: () => '~/.agents/skills/ (30+ compatible agents)',
+    hint: () => '~/.agents/skills/ (Gemini, Codex, Cursor, Copilot, 30+ agents)',
   },
 ];
 
@@ -131,11 +119,10 @@ function parseArgs() {
     force: args.includes('--force') || args.includes('-f'),
     project: args.includes('--project') || args.includes('-p'),
     claude: args.includes('--claude'),
-    gemini: args.includes('--gemini'),
     agents: args.includes('--agents'),
   };
 
-  const specificAgents = ['claude', 'gemini', 'agents']
+  const specificAgents = ['claude', 'agents']
     .filter(a => flags[a]);
 
   return { flags, specificAgents };
@@ -155,11 +142,10 @@ function showHelp() {
 
   Agent flags (skip interactive, install to specified targets):
     --claude       Claude Code (~/.claude/skills/)
-    --gemini       Gemini CLI (~/.gemini/skills/)
     --agents       Agent Skills universal (~/.agents/skills/)
 
-  Note: Cursor, Copilot, Codex, and 30+ other tools use the Agent Skills
-  standard. Install with --agents to cover all of them.
+  Note: Gemini, Codex, Cursor, Copilot, and 30+ other tools all scan
+  ~/.agents/skills/. Install with --agents to cover all of them.
 
   Options:
     -a, --all      Install to all detected agents
