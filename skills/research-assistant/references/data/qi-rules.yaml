@@ -1,0 +1,13 @@
+# Research Assistant — Internal QI Rules Ledger
+# Quality improvement rules applied by agents at runtime.
+# Add rules via the Director's [QR] QI Rule command.
+#
+# Fields:
+#   id:      Unique identifier (QI-001, QI-002, ...)
+#   added:   Date rule was created
+#   agent:   Target agent name, or "all" for universal rules
+#   trigger: When this rule should activate (keyword/condition)
+#   rule:    The instruction to apply
+#   origin:  Why this rule was created (user feedback, pattern detected, etc.)
+
+rules: []

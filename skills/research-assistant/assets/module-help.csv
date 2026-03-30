@@ -1,0 +1,17 @@
+module,skill,display-name,menu-code,description,action,args,phase,after,before,required,output-location,outputs
+research-assistant,research-assistant,New Research,NR,Intake configure and run research pipeline,workflows/research-pipeline/workflow.md,,anytime,,,true,{research-root}/,dossier verification-report deliverable
+research-assistant,research-assistant,Refresh Research,RF,Scan stale research for changes and refresh,workflows/refresh-pipeline/workflow.md,,anytime,,,false,{research-root}/,scan-report verification-report deliverable
+research-assistant,research-assistant,Publish,PB,Transform validated dossier into audience-appropriate deliverable,workflows/publish/workflow.md,,anytime,,,false,{research-root}/,deliverable
+research-assistant,research-assistant,Create Schema,CS,Design a new research schema via guided conversation,workflows/create-schema/workflow.md,,anytime,,,false,{research-root}/schemas/,schema-yaml
+research-assistant,research-assistant,Create Domain,CD,Define a new research domain via guided conversation,workflows/create-domain/workflow.md,,anytime,,,false,{research-root}/domains/,domain-yaml
+research-assistant,research-assistant,Challenge Research,CR,Adversarial reasoning validation of a research dossier,workflows/challenge-research/workflow.md,,anytime,,,false,{research-root}/,challenge-report
+research-assistant,research-assistant,Whitepaper,WP,Generate focused whitepaper from research subtopic,workflows/whitepaper/workflow.md,,anytime,,,false,{research-root}/,whitepaper
+research-assistant,research-assistant,List Research,LR,Show all research artifacts with status and confidence,workflows/list-research/workflow.md,,anytime,,,false,,listing
+research-assistant,research-assistant,Quick Capture,QC,Stub a research idea for later execution,workflows/quick-capture/workflow.md,,anytime,,,false,{research-root}/,stub
+research-assistant,research-assistant,QI Rule,QR,Capture a quality improvement rule to the internal ledger,,,anytime,,,false,{data-root}/qi-rules.yaml,qi-rule
+research-assistant,research-assistant,Tool Detect,TD,Force re-detection of available research tools and update cache,,,anytime,,,false,{data-root}/tools-cache.yaml,tools-cache
+research-assistant,research-assistant,Compare Research,CM,Compare 2+ dossiers side-by-side with ranked findings,workflows/compare-research/workflow.md,,anytime,,,false,{research-root}/_comparisons/,comparison-report
+research-assistant,research-assistant,Synthesize Research,SY,Identify cross-cutting themes across multiple dossiers,workflows/synthesize-research/workflow.md,,anytime,,,false,{research-root}/_syntheses/,synthesis-report
+research-assistant,research-assistant,Manage Schemas,MS,Schema lifecycle: list view clone validate deprecate export,workflows/manage-schemas/workflow.md,,anytime,,,false,{research-root}/schemas/,schema-yaml
+research-assistant,research-assistant,Manage Domains,MD,Domain lifecycle: list view clone validate deprecate export,workflows/manage-domains/workflow.md,,anytime,,,false,{research-root}/domains/,domain-yaml
+research-assistant,research-assistant,Import Assets,IM,Import schemas/domains from external sources,workflows/import-assets/workflow.md,,anytime,,,false,{research-root}/,schema-yaml domain-yaml

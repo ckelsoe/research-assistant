@@ -1,0 +1,29 @@
+code: research-assistant
+name: "Research Assistant"
+module_version: 2.0.0
+header: "Autonomous, verified research operations with source-anchored, confidence-scored output"
+subheader: "Multi-agent research with composable schemas, domains, and adversarial verification"
+default_selected: false
+
+module_greeting: |
+  Research Assistant is ready. Use [NR] New Research to start a research pipeline,
+  or [CS] Create Schema / [CD] Create Domain to build reusable research templates.
+  Type [help] to see all available commands.
+
+directories:
+  - "{research-root}"
+  - "{research-root}/schemas"
+  - "{research-root}/domains"
+  - "{research-root}/_comparisons"
+  - "{research-root}/_syntheses"
+
+# Variables from Core Config inserted:
+## user_name
+## communication_language
+## document_output_language
+## output_folder
+
+research-root:
+  prompt: "Where should research output be stored (dossiers, reports, deliverables)?"
+  default: "research"
+  result: "{project-root}/{value}"

@@ -1,0 +1,102 @@
+# Research Assistant — Tool Routing Configuration
+# Defines per-source tool selection rules for intelligent multi-tool orchestration.
+#
+# How it works:
+# 1. When fetching a source URL, match against routing rules in order
+# 2. Use the preferred tool for that pattern
+# 3. If preferred tool fails, try each tool in the fallback chain
+# 4. Track failures per-domain to adapt routing over time
+#
+# Available tools: playwright, firecrawl, webfetch
+# Tool availability is determined by tools-cache.yaml — routing rules
+# only apply to tools that are actually available.
+
+routing_rules:
+  # Government sites — typically simple HTML, no JS rendering needed
+  - pattern: "*.gov"
+    preferred: webfetch
+    fallback: [firecrawl, playwright]
+    reason: "Government sites are usually simple HTML"
+
+  # Financial data / SEC filings
+  - pattern: "*.sec.gov"
+    preferred: webfetch
+    fallback: [playwright]
+    reason: "SEC EDGAR is plain HTML"
+
+  # JavaScript-heavy sites requiring full browser rendering
+  - pattern: "*.crunchbase.com"
+    preferred: playwright
+    fallback: [firecrawl]
+    reason: "Crunchbase requires JavaScript rendering"
+
+  - pattern: "*.linkedin.com"
+    preferred: playwright
+    fallback: [firecrawl]
+    reason: "LinkedIn requires JavaScript rendering"
+
+  - pattern: "*.glassdoor.com"
+    preferred: playwright
+    fallback: [firecrawl]
+    reason: "Glassdoor requires JavaScript rendering"
+
+  # Documentation sites — usually well-structured HTML
+  - pattern: "docs.*"
+    preferred: webfetch
+    fallback: [firecrawl, playwright]
+    reason: "Documentation sites are usually well-structured HTML"
+
+  - pattern: "*.readthedocs.io"
+    preferred: webfetch
+    fallback: [firecrawl]
+    reason: "ReadTheDocs is static HTML"
+
+  # API endpoints — direct HTTP is most efficient
+  - pattern: "api.*"
+    preferred: webfetch
+    fallback: []
+    reason: "APIs return structured data, no rendering needed"
+
+  # News sites — often have paywalls or complex layouts
+  - pattern: "*.reuters.com"
+    preferred: playwright
+    fallback: [firecrawl, webfetch]
+    reason: "Reuters has dynamic content loading"
+
+  - pattern: "*.bloomberg.com"
+    preferred: playwright
+    fallback: [firecrawl]
+    reason: "Bloomberg has paywall and dynamic content"
+
+  # Wikipedia — simple and fast
+  - pattern: "*.wikipedia.org"
+    preferred: webfetch
+    fallback: [firecrawl]
+    reason: "Wikipedia is simple HTML"
+
+  # GitHub — API preferred for repo data, webfetch for docs
+  - pattern: "*.github.com"
+    preferred: webfetch
+    fallback: [playwright]
+    reason: "GitHub pages are usually accessible without JS"
+
+  # Default fallback — use best available tool
+  - pattern: "*"
+    preferred: playwright
+    fallback: [firecrawl, webfetch]
+    reason: "Default: prefer full browser rendering with fallback chain"
+
+# Retry strategy per tool
+retry_strategy:
+  playwright:
+    max_retries: 2
+    retry_delay_seconds: 3
+    timeout_seconds: 30
+  firecrawl:
+    max_retries: 2
+    retry_delay_seconds: 2
+    timeout_seconds: 20
+  webfetch:
+    max_retries: 3
+    retry_delay_seconds: 1
+    timeout_seconds: 15

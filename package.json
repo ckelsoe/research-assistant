@@ -1,0 +1,83 @@
+{
+  "name": "@ckelsoe/research-assistant",
+  "version": "2.0.0",
+  "description": "Autonomous multi-agent research operations with source-anchored, confidence-scored output. Works with Claude Code, Gemini CLI, Cursor, Copilot, and 30+ Agent Skills compatible tools.",
+  "main": "skills/research-assistant/SKILL.md",
+  "keywords": [
+    "claude-code",
+    "claude-skill",
+    "agent-skills",
+    "gemini-cli",
+    "research",
+    "research-assistant",
+    "multi-agent",
+    "autonomous-research",
+    "source-anchored",
+    "confidence-scoring",
+    "adversarial-verification",
+    "research-pipeline",
+    "dossier",
+    "vendor-evaluation",
+    "schema-driven",
+    "domain-knowledge"
+  ],
+  "author": "Charles Kelsoe <charles@kelsoe.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ckelsoe/research-assistant.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ckelsoe/research-assistant/issues"
+  },
+  "homepage": "https://github.com/ckelsoe/research-assistant#readme",
+  "bin": {
+    "research-assistant": "scripts/install.js"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "skills/",
+    "adapters/",
+    "scripts/",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "MIGRATION.md"
+  ],
+  "scripts": {
+    "test": "node scripts/test.js",
+    "validate": "node scripts/validate-skill.js",
+    "install-user": "node scripts/install.js",
+    "install-project": "node scripts/install.js --project",
+    "postinstall": "node scripts/install.js",
+    "build:skill": "node scripts/build-skill.js",
+    "prepublishOnly": "npm run validate"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "claudeCode": {
+    "type": "skill",
+    "skillName": "research-assistant",
+    "skillPath": "skills/research-assistant",
+    "version": "2.0.0",
+    "compatibility": {
+      "claudeCode": ">=1.0.0"
+    },
+    "features": {
+      "multiAgentOrchestration": true,
+      "sourceAnchoredResearch": true,
+      "confidenceScoring": true,
+      "adversarialVerification": true,
+      "schemaDesign": true,
+      "domainKnowledge": true,
+      "dualModeConfig": true
+    }
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.1.0"
+  }
+}

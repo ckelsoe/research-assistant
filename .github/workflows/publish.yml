@@ -1,0 +1,63 @@
+name: Publish to GitHub Packages
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Validate skill structure
+        run: npm run validate
+
+      - name: Build .skill file
+        run: npm run build:skill
+
+      - name: Publish to GitHub Packages
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Release ${{ github.ref_name }}
+          files: research-assistant.skill
+          body: |
+            See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for details.
+
+            ## Installation
+
+            **npm (interactive multi-agent installer):**
+            ```bash
+            npx @ckelsoe/research-assistant
+            ```
+
+            **Manual:**
+            Download `research-assistant.skill` below and extract to your agent's skills directory.
+
+            **Supported agents:** Claude Code, Gemini CLI, Codex, Cursor, Copilot, Cline, Roo Code, and 30+ Agent Skills compatible tools.
+          draft: false
+          prerelease: false

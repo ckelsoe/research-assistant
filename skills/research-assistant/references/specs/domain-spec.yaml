@@ -1,0 +1,123 @@
+# Domain YAML Specification
+# File pattern: data/domains/{domain-name}.domain.yaml
+# Consumers: Research Analyst, Research Director, Research Domain Architect
+#
+# This spec defines the structure that the create-domain workflow generates.
+# The generate step validates output against this spec before writing.
+
+spec_version: "1.0.0"
+
+required_fields:
+  - domain.name
+  - domain.display_name
+  - domain.version
+  - domain.created
+  - domain.author
+  - domain.scope.description
+  - domain.scope.depth
+  - domain.terminology.terms # At least 1 term
+  - domain.sources.primary # At least 1 primary source
+  - domain.lenses # At least 1 lens
+
+optional_fields:
+  - domain.updated
+  - domain.changelog
+  - domain.deprecated
+  - domain.replaced_by
+  - domain.scope.boundaries
+  - domain.scope.composability_notes
+  - domain.terminology.acronyms
+  - domain.sources.secondary
+  - domain.sources.reference
+  - domain.sources.anti_sources
+  - domain.relationships.key_entities
+  - domain.relationships.ecosystem
+  - domain.relationships.competitive_patterns
+
+structure:
+  domain:
+    # --- METADATA ---
+    name: "" # kebab-case identifier (e.g., "healthcare", "renewable-energy")
+    display_name: "" # Human-readable name (e.g., "Healthcare Industry")
+    version: "1.0.0" # Semver
+    created: "" # ISO date (YYYY-MM-DD)
+    updated: "" # ISO date (YYYY-MM-DD)
+    author: "" # Who created this domain
+    changelog: # Version history
+      - version: "" # Semver (e.g., "1.0.0")
+        date: "" # ISO date (YYYY-MM-DD)
+        summary: "" # What changed in this version
+    deprecated: false # Set to true to mark as deprecated
+    replaced_by: "" # Name of replacement domain (when deprecated)
+
+    # --- SCOPE ---
+    scope:
+      description: "" # 1-3 sentence scope definition
+      boundaries: # What this domain does NOT cover
+        - ""
+      depth: "" # shallow | moderate | deep
+      composability_notes: "" # How this domain combines with others
+
+    # --- TERMINOLOGY ---
+    terminology:
+      terms:
+        - term: "" # The domain-specific term
+          definition: "" # What it means in this domain
+          context: "" # When/where this term applies (optional)
+      acronyms:
+        - acronym: "" # The abbreviation
+          expansion: "" # What it stands for
+          context: "" # When/where used (optional)
+
+    # --- SOURCES ---
+    sources:
+      primary: # First-choice sources — highest trust
+        - name: "" # Source name
+          type: "" # trade-publication | regulatory-body | industry-org | database | academic | news
+          url: "" # Base URL (optional)
+          notes: "" # Why this source matters
+      secondary: # Good sources, not definitive
+        - name: ""
+          type: ""
+          url: ""
+          notes: ""
+      reference: # Background/context sources
+        - name: ""
+          type: ""
+          url: ""
+          notes: ""
+      anti_sources: # Sources to avoid or treat with skepticism
+        - name: ""
+          reason: "" # Why to avoid
+
+    # --- ANALYSIS LENSES ---
+    lenses:
+      - name: "" # e.g., "provider-payer-dynamics"
+        description: "" # What this lens focuses on
+        key_questions: # Questions this lens asks of any research subject
+          - ""
+        indicators: # What to look for when applying this lens
+          - ""
+
+    # --- RELATIONSHIPS ---
+    relationships:
+      key_entities: # Major players, organizations, standards bodies
+        - name: ""
+          role: "" # What role they play in this domain
+          relevance: "" # Why they matter
+      ecosystem:
+        description: "" # How the domain's actors relate to each other
+      competitive_patterns: # Common competitive dynamics
+        - ""
+
+# Validation rules for the generate step
+validation:
+  name_format: "kebab-case, lowercase, no spaces"
+  depth_values: ["shallow", "moderate", "deep"]
+  source_types: ["trade-publication", "regulatory-body", "industry-org", "database", "academic", "news"]
+  min_terms: 1
+  min_primary_sources: 1
+  min_lenses: 1
+  changelog_entry_fields: ["version", "date", "summary"]
+  deprecated_type: "boolean"
+  replaced_by_format: "kebab-case"
